@@ -148,6 +148,9 @@ public with sharing class VOL_SharedCode_TEST {
         System.assert(child5Set.contains(grandchild3.Id));
         System.assert(!child5Set.contains(parent2.Id));
 
+        // check that it won't screw up w/ no children
+        System.assertEquals(1, VOL_SharedCode.listIdsCampaignsInHierarchy(grandchild3.Id).size());
+
     }
 
 
