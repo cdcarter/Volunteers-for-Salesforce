@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Volunteer_Hours_by_Affiliated_Contacts__c</fullName>
+        <externalId>false</externalId>
+        <label>Volunteer Hours by Affiliated Contacts</label>
+        <summarizedField>npe5__Affiliation__c.Volunteer_Hours__c</summarizedField>
+        <summaryForeignKey>npe5__Affiliation__c.npe5__Organization__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+</CustomObject>
