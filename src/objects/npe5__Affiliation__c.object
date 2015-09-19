@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Volunteer_Hours__c</fullName>
+        <description>The number of Volunteer Hours completed with regard to this affiliation.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of Volunteer Hours completed with regard to this affiliation.</inlineHelpText>
+        <label>Volunteer Hours</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>
