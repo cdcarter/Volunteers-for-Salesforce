@@ -1,5 +1,6 @@
 <project default="deploy" basedir="." xmlns:sf="antlib:com.salesforce">
     <!-- Load the package requirements from version.properties -->
+    <!-- Change -->
     <loadproperties srcFile="${basedir}/version.properties"/>
 
     <!-- Load environment variables -->
