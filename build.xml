@@ -13,12 +13,12 @@
         </condition>
         CUMULUSCI_PATH is Required!
 
-        This project uses the CumulusCI build scripts which must be checked out and 
+        This project uses the CumulusCI build scripts which must be checked out and
         referenced in an environment variable before you can run the build scripts.
 
         To configure the build scripts, do the following:
 
-        1. Clone the CumulusCI GitHub repository to a local folder: 
+        1. Clone the CumulusCI GitHub repository to a local folder:
             https://github.com/SalesforceFoundation/CumulusCI
 
         2. Set the CUMULUSCI_PATH environment variable to the path to CumulusCI
@@ -28,10 +28,13 @@
             git clone https://github.com/SalesforceFoundation/CumulusCI ~/CumulusCI
             export CUMULUSCI_PATH=~/CumulusCI
     </fail>
-    
+
     <!-- Load CumulusCI build targets -->
     <import file="${env.CUMULUSCI_PATH}/build/build.xml" />
 
-    <!-- Add project specific build targets and CumulusCI overrides here -->
+    <!-- We need to delete a few Campaign rollup fields before we can uninstall the package proper (metadata api doesn't seem to be prioritizing things properly) -->
+    <target name="preUninstall">
+      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" deployRoot="preUninstall" purgeOnDelete="${cumulusci.destroy.purgeondelete}" ignoreWarnings="true" maxPoll="${cumulusci.maxPoll.notest}" />
+    </target>
 
 </project>
