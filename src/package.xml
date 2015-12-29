@@ -193,6 +193,7 @@
         <members>Volunteers_Settings__c.Contact_Matching_Rule__c</members>
         <members>Volunteers_Settings__c.Google_Maps_API_Key__c</members>
         <members>Volunteers_Settings__c.Personal_Site_Org_Wide_Email_Name__c</members>
+        <members>Volunteers_Settings__c.Personal_Site_Requires_URL_Email_Match__c</members>
         <members>Volunteers_Settings__c.Recurring_Job_Future_Months__c</members>
         <members>Volunteers_Settings__c.Signup_Bucket_Account_On_Create__c</members>
         <members>Volunteers_Settings__c.Signup_Creates_Contacts_If_No_Match__c</members>
@@ -558,8 +559,12 @@
         <name>Translations</name>
     </types>
     <types>
+        <members>Job_Recurrence_Schedule__c.JRS_Days_Of_Week_Required</members>
+        <members>Job_Recurrence_Schedule__c.JRS_Weekly_Occurrence_Required</members>
         <members>Volunteer_Hours__c.HoursRequiredOnCompletion</members>
         <members>Volunteer_Hours__c.StatusMustBeSet</members>
+        <members>Volunteer_Recurrence_Schedule__c.VRS_Days_of_Week_Required</members>
+        <members>Volunteer_Recurrence_Schedule__c.VRS_Weekly_Occurrence_Required</members>
         <name>ValidationRule</name>
     </types>
     <types>
@@ -609,5 +614,5 @@
         <members>Lead.Volunteer_Signup_Thank_You_Sent_Lead</members>
         <name>WorkflowTask</name>
     </types>
-    <version>31.0</version>
+    <version>33.0</version>
 </Package>

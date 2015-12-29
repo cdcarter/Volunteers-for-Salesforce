@@ -52,8 +52,12 @@ global with sharing class VOL_SharedCode {
                 Description__c, System_Note__c From Volunteer_Job_Slots__r 
                 where Start_Date_Time__c >= :dtStart and Start_Date_Time__c < :dtEnd
                 order by Start_Date_Time__c LIMIT 999) 
-            from Volunteer_Job__c where Campaign__r.IsActive = true and Id = :volunteerJobId];
+            from Volunteer_Job__c where Id = :volunteerJobId];
                 
+        // bail out if no jobs found
+        if (listVolunteerJobs.size() == 0)
+        	return listSO;
+        
         // whether to use our datetime formatting, or salesforce default for the current user
         boolean useDateTimeFixup = (strDateFormat != null && strTimeFormat != null);        
         
@@ -300,6 +304,34 @@ global with sharing class VOL_SharedCode {
         }
     }   
     
+    // global code to verify the passed in ContactId is valid, as well as the email
+    // exists on the Contact record.
+    global static boolean isValidContactIdAndEmail(ID contactId, string strEmail) {
+    	string strSoql = 'select Id from Contact where Id = :contactId ';
+        if (VolunteersSettings.Personal_Site_Requires_URL_Email_Match__c) {
+        	if (strEmail == null || strEmail == '')
+        		return false;
+            strSoql += 'and (Email= :strEmail';
+	        // any additional email fields to check
+	        if (VolunteersSettings.Contact_Match_Email_Fields__c != null) {
+		        list<string> listStrEmail = new list<string>();
+	    	    listStrEmail = VolunteersSettings.Contact_Match_Email_Fields__c.split(';');
+	        	for (string str : listStrEmail) {
+	        		strSoql += ' or ' + str + ' = :strEmail ';
+	        	}
+	        }
+	       	// handle NPSP email fields 
+	       	if (IsNPSPInstalled) {
+				strSoql += ' or npe01__AlternateEmail__c = :strEmail ';
+				strSoql += ' or npe01__HomeEmail__c = :strEmail ';
+				strSoql += ' or npe01__WorkEmail__c = :strEmail ';
+	       	}
+	       	strSoql += ') ';
+        }        
+        list<Contact> listCon = Database.Query(strSoql); 
+		return listCon.size() > 0;
+    }
+    
     // global code to lookup an existing contact
     // listStrFields are optional fields to include in the soql call
     global static list<Contact> LookupContact(Contact contact, list<string> listStrFields) {    
@@ -434,6 +466,11 @@ global with sharing class VOL_SharedCode {
             boolean hasOtherAddress = false;
             for (string strF : listStrFields) {
             	strF = strF.toLowerCase();
+            	// we actually still want to copy email if it is currently empty
+            	if (strF == 'email' && conExisting.Email == null) {
+            		conExisting.Email = contact.Email;
+            		continue;
+            	}
             	if (strF != 'id' && strF != 'firstname' && strF != 'email' && contact.get(strF) != null) {
             		if (strF.contains('mailing')) {
             			hasMailingAddress = true;
